@@ -1,0 +1,112 @@
+# Give a Smile — Site vitrine
+
+Site statique (HTML/CSS/JS pur, aucune installation requise) pour l'association **Give a Smile**.
+
+## Structure du projet
+
+```
+give-a-smile/
+├── index.html      → toute la structure et le contenu du site
+├── style.css        → tout le design (couleurs, typo, mise en page)
+├── script.js         → les interactions (menu, galerie, formulaire, animations)
+└── images/           → tes photos (actuellement des images de remplacement)
+```
+
+## Ouvrir le projet dans VS Code
+
+1. **Installe VS Code** si ce n'est pas déjà fait : https://code.visualstudio.com/
+2. Décompresse le dossier `give-a-smile` quelque part sur ton PC.
+3. Ouvre VS Code → `Fichier` → `Ouvrir un dossier...` → sélectionne `give-a-smile`.
+
+## Voir le site en direct pendant que tu modifies le code
+
+1. Dans VS Code, va dans l'onglet **Extensions** (icône carrés à gauche).
+2. Cherche **"Live Server"** (par Ritwick Dey) et clique sur **Installer**.
+3. Dans l'explorateur de fichiers de VS Code, fais un **clic droit sur `index.html`**.
+4. Choisis **"Open with Live Server"**.
+5. Ton site s'ouvre dans le navigateur, et se **rafraîchit automatiquement** à chaque fois que tu enregistres un fichier (Ctrl+S).
+
+## Remplacer les images par tes vraies photos
+
+Le dossier `images/` contient pour l'instant des images de remplacement (avec un texte dessus)
+générées automatiquement, juste pour que tu voies la mise en page.
+
+Remplace-les par tes vraies photos **en gardant exactement les mêmes noms de fichiers** :
+
+| Fichier | Utilisé pour |
+|---|---|
+| `images/hero.jpg` | Grande photo en haut de la page (portrait, format vertical) |
+| `images/mission.jpg` | Photo de la section "Notre mission" (format carré) |
+| `images/gallery-1.jpg` à `gallery-6.jpg` | Les 6 photos de la galerie (format carré) |
+
+💡 Astuce : si tu changes un nom de fichier, il faut aussi le modifier dans `index.html`
+(cherche `src="images/...` avec Ctrl+F).
+
+## Modifier les textes
+
+Tout le texte visible se trouve dans `index.html`. Tu peux modifier :
+- Le titre principal (`<h1>`)
+- Les chiffres d'impact (section `id="impact"`)
+- Le témoignage (section `class="temoignage"`)
+- Les informations de contact (section `id="contact"`)
+
+## Brancher le vrai bouton de don (Wave)
+
+1. Dans l'app Wave, active le compte **Wave Business** (gratuit).
+2. Génère un **lien de paiement** pour chaque montant (5 000 / 10 000 / 25 000 FCFA),
+   plus un lien libre (sans montant fixé) pour l'option "Autre montant".
+3. Ouvre `script.js`, tout en haut de la section **"4. Boutons de montant pour le don"**,
+   et remplace les liens `https://pay.wave.com/m/M_XXXXXXXX/c/ci/` par TES vrais liens :
+
+```js
+const WAVE_LINKS = {
+  "5000":  "https://pay.wave.com/m/M_TON_LIEN_ICI/c/ci/",
+  "10000": "https://pay.wave.com/m/M_TON_LIEN_ICI/c/ci/",
+  "25000": "https://pay.wave.com/m/M_TON_LIEN_ICI/c/ci/",
+  "autre": "https://pay.wave.com/m/M_TON_LIEN_ICI/c/ci/"
+};
+```
+
+4. Enregistre (Ctrl+S), recharge la page : le bouton "Faire un don" ouvre maintenant
+   directement la page Wave avec le bon montant.
+
+💡 Tu peux aussi ajouter **Orange Money** en solution de secours : active le compte
+marchand Orange Money dans l'app (ou en agence), puis affiche ton numéro marchand
+ou ton lien de paiement quelque part sur la page (par exemple sous les boutons Wave),
+au cas où un visiteur n'a pas Wave.
+
+## Brancher le formulaire de contact pour recevoir les messages par email
+
+Actuellement, le formulaire de contact ne fait qu'afficher un message de confirmation
+(il n'envoie rien). Pour recevoir vraiment les messages par email sans créer de serveur,
+la solution la plus simple est **Formspree** (gratuit) :
+
+1. Crée un compte sur https://formspree.io/
+2. Crée un nouveau formulaire, tu obtiens une URL du type `https://formspree.io/f/xxxxxxx`
+3. Dans `index.html`, remplace :
+   ```html
+   <form class="contact-form" id="contact-form">
+   ```
+   par :
+   ```html
+   <form class="contact-form" id="contact-form" action="https://formspree.io/f/xxxxxxx" method="POST">
+   ```
+4. Dans `script.js`, supprime ou commente la ligne `e.preventDefault();` dans la section
+   "5. Formulaire de contact" pour laisser le formulaire s'envoyer normalement.
+
+## Mettre le site en ligne (gratuitement)
+
+Le plus simple pour un site statique comme celui-ci :
+
+**Option A — Netlify (recommandé, glisser-déposer)**
+1. Va sur https://app.netlify.com/drop
+2. Glisse le dossier `give-a-smile` entier dans la page.
+3. Ton site est en ligne en quelques secondes avec une URL gratuite.
+
+**Option B — GitHub Pages**
+1. Crée un dépôt GitHub et pousse ces fichiers dedans.
+2. Dans les paramètres du dépôt → `Pages` → choisis la branche `main` → Enregistrer.
+3. Ton site sera accessible à `https://ton-nom.github.io/nom-du-depot/`.
+
+Comme tu utilises déjà Render pour tes autres projets, tu peux aussi déployer ce dossier
+en tant que **"Static Site"** sur Render.
